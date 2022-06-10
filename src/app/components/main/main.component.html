@@ -1,0 +1,57 @@
+<div class="main-grid">
+  <div class="main-section">
+    <div class="product-table-container mat-elevation-z8" [class.full-height]="selectedProduct">
+      <table
+        mat-table
+        [dataSource]="products$"
+        class="product-table mat-elevation-z8"
+      >
+        <ng-container matColumnDef="ProductId">
+          <th mat-header-cell *matHeaderCellDef>ProductId</th>
+          <td mat-cell *matCellDef="let product">{{ product.ProductId }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="ProductCode">
+          <th mat-header-cell *matHeaderCellDef>ProductCode</th>
+          <td mat-cell *matCellDef="let product">{{ product.ProductCode }}</td>
+        </ng-container>
+
+     
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          (click)="setSelectedProduct(product)"
+          [class.selected-row]="checkIfSelected(product)"
+          *matRowDef="let product; columns: displayedColumns"
+        ></tr>
+      </table>
+    </div>
+  </div>
+
+  <ng-container *ngIf="selectedProduct">
+    <div class="main-section">
+      <ng-container *ngIf="selectedProduct">
+        <table class="selected-table">
+          <tr class="selected-table__row">
+            <th
+              class="selected-table__header"
+              *ngFor="let item of selectedProduct | keyvalue"
+            >
+              {{ item.key }}
+            </th>
+          </tr>
+          <tr class="selected-table__row">
+            <td
+              class="selected-table__cell"
+              *ngFor="let item of selectedProduct | keyvalue"
+            >
+              {{ item.value === null ? "text is unknown" : item.value }}
+            </td>
+          </tr>
+        </table>
+      </ng-container>
+      <button class="button btn-right" (click)="close()">Close</button>
+    </div>
+  </ng-container>
+</div>
